@@ -19,7 +19,7 @@ jobs:
           print
           (platform.processor())
         shell: python
-  run-windwos-commands:
+  run-windows-commands:
     runs-on: windows-latest
     needs: ["run-shell-command"]
     steps:
