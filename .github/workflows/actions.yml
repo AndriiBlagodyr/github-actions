@@ -1,15 +1,37 @@
-name: Actions Workflow
-
-on: [push]
-
+name: 'Actions Workflow'
+on:
+  push:
+    branches:
+      - master
+      - 'feature/**'
+      - '!feature/featc'
+    tags:
+      - 'v1.*'
+    paths:
+      - '**.js'
+      - '!filename.js'
 jobs:
   run-github-actions:
     runs-on: ubuntu-latest
     steps:
-      - name: Simple JS Action
+      -
+        name: playload
+        run: 'echo ${{ github.event.client_payload.env }}'
+      -
+        name: 'List Files'
+        run: "pwd\nls -a\necho $GITHUB_SHA\necho $GITHUB_REPOSITORY\necho $GITHUB_WORKSPACE\necho \"${{ github.token }}\"\n"
+      -
+        name: Checkout
+        uses: actions/checkout@v1
+      -
+        name: 'List Files After Checkout'
+        run: "pwd\nls -a\n"
+      -
+        name: 'Simple JS Action'
         id: greet
         uses: actions/hello-world-javascript-action@v1
         with:
           who-to-greet: John
-      - name: Log Greeting Time
-        run: echo "${{ steps.greet.outputs.time }}"
+      -
+        name: 'Log Greeting Time'
+        run: 'echo "${{ steps.greet.outputs.time }}"'
